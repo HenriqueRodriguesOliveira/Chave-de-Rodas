@@ -23,8 +23,10 @@ function AuthRoutes(){
                 borderBottomWidth: 1
             },
             headerTitle: 'Voltar'
-        }}
+            }}
             />
+
+            
         </AuthStack.Navigator>
     );
 }

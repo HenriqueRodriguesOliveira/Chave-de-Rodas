@@ -15,7 +15,6 @@ import {
 
 export default function SignUp(){
   const[nome, setNome] = useState('');
-  const[numero, setNumero] = useState('');
   const[email, setEmail] = useState('');
   const[password, setPassword] = useState('');
 
@@ -41,17 +40,7 @@ export default function SignUp(){
           onChangeText={ (text) => setNome(text)}
           />
         </AreaInput>
-
-        <AreaInput>
-          <Input 
-          placeholder="Number"
-          autoCorrect={false}
-          autoCapitalize="none"
-          value={numero}
-          onChangeText={ (text) => setNumero(text)}
-          />
-        </AreaInput>
-
+        
         <AreaInput>
           <Input 
           placeholder="Email"
