@@ -1,0 +1,61 @@
+COMO PEGAR OS DADOS NO FIREBASE
+
+const [nome, setNome] = useState('Carregando....')
+
+useEffect(()=> {
+  async function dados(){
+    await firebase.database().ref('nome').on('value', (snapshot) => {
+      setNome(snapshot.val());
+    });
+  }
+  dados();
+},[]);
+
+<Text>Nome {nome}</Text>
+
+.on -> puxa dados 24hrs 
+.once -> puxa os dados uma única vez
+
+
+CRIANDO UM NÓ E ENVIANDO DADOS
+useEffect(()=> {
+
+  async function dados(){
+    await firebase.database().ref('serviços').set('teste');
+  }
+  dados();
+ }, []);
+
+
+
+REMOVENDO UM NÓ
+useEffect(()=> {
+
+  async function dados(){
+    await firebase.database().ref('serviços').remove();
+  }
+  dados();
+ }, []);
+
+CADASTRANDO UM NOVO USUARIO
+useEffect(()=> {
+
+  async function dados(){
+    await firebase.database().ref('usuarios').child().set({
+        nome: 'jose'
+        cargo: 'programador'
+    });
+  }
+  dados();
+ }, []);
+
+ATUALIZAR ALGUM DADO
+useEffect(()=> {
+
+  async function dados(){
+    await firebase.database().ref('usuarios').child().update({
+        nome: 'Rodrigues'
+    });
+  }
+  dados();
+ }, []);

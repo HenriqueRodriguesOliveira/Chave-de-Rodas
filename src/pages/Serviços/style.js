@@ -25,29 +25,37 @@ margin-left: 15px;
 margin-top: 10px;
 `;
 
-export const ContainerMap = styled.View`
+export const ContainerCheck = styled.View`
 flex-direction: row;
 `;
 
-export const CheckBox = styled.TouchableOpacity`
-width: 20px;
-height: 20px;
-border-radius: 4px;
-border-width: 1px;
-border-color: #007D45;
-margin-right: 5px;
-margin-top: 3px;
+export const Suspensao = styled.Text`
+font-size: 18px;
+color: black;
+padding-right: 71px;
 `;
 
-export const Check = styled.Text`
-align-self: center;
-font-size: 12px;
+export const Motor = styled.Text`
+font-size: 18px;
+color: black;
+padding-right: 110px;
+`;
+
+export const Injecao = styled.Text`
+font-size: 18px;
+color: black;
+padding-right: 50px;
 `;
 
 export const Servico = styled.Text`
 font-size: 18px;
 color: black;
-margin-bottom: 35px;
+padding-right: 50px;
+`;
+
+export const Valor = styled.Text`
+font-size: 15px;
+margin-bottom: 20px;
 `;
 
 export const ButtonConfirmar = styled.TouchableOpacity`
@@ -55,9 +63,9 @@ height: 45px;
 width: 150px;
 background-color: #007D45;
 border-radius: 7px;
-
+position: absolute;
+left: 170px;
 `;
-
 export const TextButton = styled.Text`
 font-size: 14px;
 text-align: center;

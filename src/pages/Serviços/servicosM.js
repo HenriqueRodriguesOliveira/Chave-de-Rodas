@@ -46,7 +46,7 @@ export default function Serviços() {
     }
 
     if(isSelected3){
-      valorTotal += 150
+      valorTotal += 80
       servicosSelecionados.push("Revisão na injeção eletrônica")
     }
 
@@ -67,7 +67,7 @@ export default function Serviços() {
  return (
 
    <Background>
-    <Template  source={require('../../assets/carro.jpg')}/>
+    <Template  source={require('../../assets/moto.png')}/>
     
     <Titulo>Lista de Serviços</Titulo>
 
@@ -99,11 +99,11 @@ export default function Serviços() {
         onValueChange={setSelection3}
         />
       </ContainerCheck>
-      <Valor>Valor: R$150,00</Valor>
+      <Valor>Valor: R$80,00</Valor>
       
       <ContainerCheck>
       <Servico>Valor total: ${calcularTotal()}</Servico>
-      <ButtonConfirmar onPress={() => cadastrar().then(navigation.navigate('Agendamento'))}>
+      <ButtonConfirmar onPress={() => cadastrar().then(navigation.navigate('AgendamentoM'))}>
         <TextButton>Confirmar</TextButton>
       </ButtonConfirmar>
       </ContainerCheck>

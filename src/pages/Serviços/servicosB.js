@@ -37,17 +37,17 @@ export default function Serviços() {
   function calcularTotal() {
     if(isSelected){
       valorTotal += 60
-      servicosSelecionados.push("Diagnostico da suspensão\n")
+      servicosSelecionados.push("Pintura\n")
     }
 
     if(isSelected2){
-      valorTotal += 50
-      servicosSelecionados.push("Diagnostico do Motor")
+      valorTotal += 30
+      servicosSelecionados.push("Revisão")
     }
 
     if(isSelected3){
-      valorTotal += 150
-      servicosSelecionados.push("Revisão na injeção eletrônica")
+      valorTotal += 35
+      servicosSelecionados.push("Troca de rodas")
     }
 
     return valorTotal
@@ -67,13 +67,13 @@ export default function Serviços() {
  return (
 
    <Background>
-    <Template  source={require('../../assets/carro.jpg')}/>
+    <Template  source={require('../../assets/bicicleta.png')}/>
     
     <Titulo>Lista de Serviços</Titulo>
 
     <Container>
       <ContainerCheck>
-       <Suspensao>Diagnostico da suspensão</Suspensao>
+       <Suspensao>Pintura</Suspensao>
         <CheckBox
         value={isSelected}
         onValueChange={setSelection}
@@ -83,27 +83,27 @@ export default function Serviços() {
       
 
       <ContainerCheck>
-       <Motor>Diagnostico do Motor</Motor>
+       <Motor>Revisão</Motor>
         <CheckBox
         value={isSelected2}
         onValueChange={setSelection2}
         />
       </ContainerCheck>
-      <Valor>Valor: R$50,00</Valor>
+      <Valor>Valor: R$30,00</Valor>
 
 
       <ContainerCheck>
-       <Injecao>Revisão na injeção eletrônica</Injecao>
+       <Injecao>Troca de rodas</Injecao>
         <CheckBox
         value={isSelected3}
         onValueChange={setSelection3}
         />
       </ContainerCheck>
-      <Valor>Valor: R$150,00</Valor>
+      <Valor>Valor: R$35,00</Valor>
       
       <ContainerCheck>
       <Servico>Valor total: ${calcularTotal()}</Servico>
-      <ButtonConfirmar onPress={() => cadastrar().then(navigation.navigate('Agendamento'))}>
+      <ButtonConfirmar onPress={() => cadastrar().then(navigation.navigate('AgendamentoB'))}>
         <TextButton>Confirmar</TextButton>
       </ButtonConfirmar>
       </ContainerCheck>

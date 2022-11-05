@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-
+import firebase from '../../services/firebaseConnection';
 import { 
   Background, 
   Titulo, 
@@ -15,7 +15,19 @@ import {
 export default function Concluido() {
   const navigation = useNavigation();
 
-  const[email, setEmail] = useState('');
+  const[comentarios, setComentarios] = useState('');
+
+    async function comentario(){
+      let feedbacks = await firebase.database().ref('feedbacks');
+      let chave = feedbacks.push().key;
+
+      feedbacks.child(chave).set({
+        feedback: comentarios
+      })
+      .then(()=>{
+        console.log('COMENTARIO ENVIADO')
+      })
+    }
 
  return (
    <Background>
@@ -29,12 +41,12 @@ export default function Concluido() {
           <Input 
           autoCorrect={false}
           autoCapitalize="none"
-          value={email}
-          onChangeText={ (text) => setEmail(text)}
+          value={comentarios}
+          onChangeText={(text) => setComentarios(text)}
           />
     </AreaInput>
 
-    <ButtonConfirmar onPress={ () => navigation.navigate('Home')}>
+    <ButtonConfirmar onPress={() => comentario().then(navigation.navigate('Home'))}>
           <TextButton>Enviar</TextButton>
     </ButtonConfirmar>
    </Background>

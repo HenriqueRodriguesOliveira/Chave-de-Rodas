@@ -20,7 +20,7 @@ export default function Agendamento() {
 
   return (
     <Background>
-        <Template source={require('../../assets/carro.jpg')}/>
+        <Template source={require('../../assets/bicicleta.png')}/>
         
         <Titulo>Selecione Data/Hora</Titulo>
 

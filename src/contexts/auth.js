@@ -1,7 +1,6 @@
 import React, { useState, createContext, useEffect } from 'react';
 import firebase from '../services/firebaseConnection';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 export const AuthContext = createContext({});
 
 function AuthProvider({ children }){
@@ -23,6 +22,7 @@ function AuthProvider({ children }){
        loadStorage();
     }, []);
 
+    
     //Funcao para logar o usario
     async function signIn(email, password){
         await firebase.auth().signInWithEmailAndPassword(email,password)
@@ -50,7 +50,7 @@ function AuthProvider({ children }){
         await firebase.auth().createUserWithEmailAndPassword(email,password)
         .then(async (value)=>{
             let uid = value.user.uid;
-            await firebase.database().ref('users').child(uid).set({
+            await firebase.database().ref('usuario').child(uid).set({
                 saldo: 0,
                 nome: nome
             })

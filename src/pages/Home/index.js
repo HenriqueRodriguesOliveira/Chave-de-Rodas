@@ -1,6 +1,8 @@
-import React, { useContext } from 'react';
-import { View, Text, Button } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import {Button} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import  firebase  from '../../services/firebaseConnection';
+import { AuthContext } from '../../contexts/auth';
 
 import {
   Header,
@@ -19,11 +21,23 @@ import {
   MenuButton
 } from './style';
 
-import { AuthContext } from '../../contexts/auth';
 
 export default function Home(){
   const { user, signOut } = useContext(AuthContext);
+  const { comentario, setComentarios } = useState('');
   const navigation = useNavigation();
+
+    
+  async function dados(){
+    await firebase.database().ref('feedbacks').on('value').then((snapshot) =>{
+      let data = {
+        feedbacks: snapshot.val().feedbacks,
+      };
+      setComentarios(data);
+    })
+  
+   }
+
 
 
   return(
@@ -48,11 +62,11 @@ export default function Home(){
           <ImageCard source={require('../../assets/carro.jpg')} />
         </Card>
 
-        <Card>
+        <Card onPress={ () => navigation.navigate('ServiçosM')}>
         <ImageCard source={require('../../assets/moto.png')} />
         </Card>
 
-        <Card>
+        <Card onPress={ () => navigation.navigate('ServiçosB')}>
         <ImageCard source={require('../../assets/bicicleta.png')} />
         </Card>
       </Container>
@@ -79,13 +93,8 @@ export default function Home(){
       <Titulo>FeedBacks</Titulo>
       <Container>
         <ContainerFeed>
-          <Nome>Maria</Nome>
-          <Comentarios>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</Comentarios>
-        </ContainerFeed>
-
-        <ContainerFeed>
-          <Nome>Olá</Nome>
-          <Comentarios>teste teste teste</Comentarios>
+          <Nome>{user.nome}</Nome>
+          <Comentarios></Comentarios>
         </ContainerFeed>
       </Container>
 
