@@ -40,7 +40,7 @@ export default function SignIn(){
       <Container
       behavior={Platform.OS === 'ios' ? 'padding' : ''}>
 
-        <Logo source={require('../../assets/Logo.png')}/>
+        <Logo source={require('../../assets/images/Logo.png')}/>
 
         <AreaInput>
           <Input 
@@ -75,11 +75,11 @@ export default function SignIn(){
 
         <ContainerButton>
           <IconButton>
-            <Icon source={require('../../assets/facebook.png')}/>
+            <Icon source={require('../../assets/images/facebook.png')}/>
           </IconButton>
 
           <IconButton>
-            <Icon source={require('../../assets/google.png')}/>
+            <Icon source={require('../../assets/images/google.png')}/>
           </IconButton>
         </ContainerButton>
 

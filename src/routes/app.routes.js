@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Home from '../pages/Home';
+import Perfil from '../pages/Perfil';
 
 import Serviços from '../pages/Serviços';
 import ServiçosM from '../pages/Serviços/servicosM';
@@ -17,7 +18,7 @@ const AppStack =  createStackNavigator();
 
 function AppRoutes(){
     return(
-        <AppStack.Navigator>
+        <AppStack.Navigator initialRouteName='Concluido'>
             <AppStack.Screen 
             name="Home" 
             component={Home}
@@ -62,9 +63,9 @@ function AppRoutes(){
                 },
             }}/>
 
-
-
             <AppStack.Screen name="Concluido" component={Concluido} options={{headerShown: false}}/>
+
+            <AppStack.Screen name="Perfil" component={Perfil} />
         </AppStack.Navigator>
     );
 }

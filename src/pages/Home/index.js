@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {Button, FlatList, ScrollView, StyleSheet, Text} from 'react-native';
+import {Button, FlatList, ScrollView, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import  firebase  from '../../services/firebaseConnection';
 import { AuthContext } from '../../contexts/auth';
+import Listagem from '../../Listagem';
 
 import {
   Background,
@@ -35,13 +36,13 @@ export default function Home(){
 
   useEffect(()=> {
     async function dados(){
-      await firebase.database().ref('comentarios').limitToLast(5).once('value', (snapshot)=>{
+      await firebase.database().ref('usuario/comentarios').limitToLast(3).once('value', (snapshot)=>{
         setLista([]);
 
         snapshot.forEach((childItem) =>  {
           let data = {
-            comentarios: childItem.comentarios,
-            data: childItem.date,
+            key: childItem.key,
+            feedback: childItem.val().feedback,
           };
           setLista(oldArray => [...oldArray, data]);
         })
@@ -50,16 +51,14 @@ export default function Home(){
     dados();
     },[]);
     
-
-
   return(
     <Background>
-      <ScrollView>
+
       <ContainerHeader>
         <MenuButton>
         <Menu source={require('../../assets/images/menu.png')} />
         </MenuButton>
-        <MenuButton>
+        <MenuButton onPress={() => navigation.navigate('Perfil')}>
         <Icon source={require('../../assets/images/user-fake.jpeg')} />
         </MenuButton>
       </ContainerHeader>
@@ -100,28 +99,14 @@ export default function Home(){
         </ContainerMarcas>
       </Container>
 
-      
-
-
       <Titulo>Nossa Avaliação</Titulo>
-      
-      <ContainerComentarios style={estilo.sombra}>
-         <Comentarios style={{color: '#404258'}}>
-          Henrique Rodrigues                    09/11/2022
-         </Comentarios>
-         <Comentarios>
-          Nota 10, adorei o serviço!!
-         </Comentarios>
-      </ContainerComentarios>
-      <ContainerComentarios style={estilo.sombra}>
-         <Comentarios style={{color: '#404258'}}>
-          Henrique Rodrigues                    09/11/2022
-         </Comentarios>
-         <Comentarios>
-          Nota 10, adorei o serviço!!
-         </Comentarios>
-      </ContainerComentarios>
 
+      <FlatList 
+          keyExtractor={item => item.key}
+          data={lista}
+          renderItem={({item}) => ( <Listagem data={item} />)}/>
+
+      
       <Div/>
 
       <Titulo>Nossa Localização</Titulo>
@@ -129,8 +114,7 @@ export default function Home(){
       <Comentarios>Rua Francisco Uchoa - 755 - P.Andrade</Comentarios>
       <Comentarios>Tel: (85) 3235-5761</Comentarios>
       </Foolter>
-      
-      </ScrollView>
+
     </Background>
   );
 }

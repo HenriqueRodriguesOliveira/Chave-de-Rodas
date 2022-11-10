@@ -3,19 +3,22 @@ import styled from 'styled-components/native';
 export const Background = styled.View`
 flex: 1;
 background-color: #FFF;
-justify-content: center;
-align-items: center;
+
 `;
 
 export const Container = styled.View`
 flex-direction: column;
-align-items: center;
+width: 400px;
+height: 300px;
 `;
 
 export const Titulo = styled.Text`
 color: black;
 font-weight: bold;
 font-size: 25px;
+margin: 20px;
+margin-left: auto;
+margin-right: auto;
 `;
 
 export const Imagem = styled.Image`
@@ -32,25 +35,27 @@ margin-top: 20px;
 
 export const Input = styled.TextInput`
 background-color: #eee;
-height: 100px;
 font-size: 17px;
 color: #000;
 border-radius: 7px;
+left: 10px;
 `;
 
 export const TextoInput = styled.Text`
 font-size: 15px;
 font-weight: bold;
+margin-right: auto;
 margin-bottom: 10px;
+left: 10px;
 `;
 
 export const ButtonConfirmar = styled.TouchableOpacity`
 height: 45px;
 width: 150px;
-background-color: #007D45;
+background-color: #293462;
 border-radius: 7px;
-right: 85px;
-top: 30px;
+left: 10px;
+top: 10px;
 `;
 
 export const TextButton = styled.Text`

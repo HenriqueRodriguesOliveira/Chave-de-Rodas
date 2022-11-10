@@ -29,7 +29,7 @@ export default function SignUp(){
       <Container
       behavior={Platform.OS === 'ios' ? 'padding' : ''}>
 
-        <Logo source={require('../../assets/Logo.png')}/>
+        <Logo source={require('../../assets/images/Logo.png')}/>
 
         <AreaInput>
           <Input 

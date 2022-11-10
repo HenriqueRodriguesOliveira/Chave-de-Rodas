@@ -67,7 +67,7 @@ export default function Serviços() {
  return (
 
    <Background>
-    <Template  source={require('../../assets/moto.png')}/>
+    <Template  source={require('../../assets/images/moto.png')}/>
     
     <Titulo>Lista de Serviços</Titulo>
 
