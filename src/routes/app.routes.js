@@ -24,14 +24,45 @@ function AppRoutes(){
             options={{headerShown: false}} 
             />
 
-            <AppStack.Screen name="Serviços" component={Serviços}/>
-            <AppStack.Screen name="ServiçosM" component={ServiçosM}/>
-            <AppStack.Screen name="ServiçosB" component={ServiçosB}/>
+            <AppStack.Screen name="Serviços & Agendamento" component={Serviços} />
+
+            <AppStack.Screen name="ServiçosM" component={ServiçosM} options={{
+                headerStyle:{
+                    borderBottomColor: '#007D45',
+                    borderBottomWidth: 1
+                },
+            }}/>
+            <AppStack.Screen name="ServiçosB" component={ServiçosB} options={{
+                headerStyle:{
+                    borderBottomColor: '#007D45',
+                    borderBottomWidth: 1
+                },
+            }}/>
 
 
-            <AppStack.Screen name="Agendamento" component={Agendamento}/>
-            <AppStack.Screen name="AgendamentoM" component={AgendamentoM}/>
-            <AppStack.Screen name="AgendamentoB" component={AgendamentoB}/>
+            <AppStack.Screen name="Agendamento" component={Agendamento} 
+            options={{
+                headerStyle:{
+                    borderBottomColor: '#007D45',
+                    borderBottomWidth: 1
+                },
+            }}/>
+            <AppStack.Screen name="AgendamentoM" component={AgendamentoM}
+            options={{
+                headerStyle:{
+                    borderBottomColor: '#007D45',
+                    borderBottomWidth: 1
+                },
+            }}/>
+            <AppStack.Screen name="AgendamentoB" component={AgendamentoB}
+            options={{
+                headerStyle:{
+                    borderBottomColor: '#007D45',
+                    borderBottomWidth: 1
+                },
+            }}/>
+
+
 
             <AppStack.Screen name="Concluido" component={Concluido} options={{headerShown: false}}/>
         </AppStack.Navigator>
