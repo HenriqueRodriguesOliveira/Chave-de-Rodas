@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { PermissionsAndroid, Dimensions, Platform, StyleSheet} from 'react-native';
+import { PermissionsAndroid, Dimensions, Platform, StyleSheet, ScrollView} from 'react-native';
 import { Background, Titulo, Container,  AreaInput, Input, TextoInput, ButtonConfirmar, TextButton} from './style';
 import firebase from '../../services/firebaseConnection';
 import { useNavigation } from '@react-navigation/native';
+import { format } from 'date-fns';
 
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
@@ -53,7 +54,8 @@ export default function Concluido() {
       let chave = usuario.push().key;
 
       usuario.child(chave).set({
-        feedback: comentarios
+        feedback: comentarios,
+        date: format(new Date(), 'dd/MM/yyyy')
       });
       alert('Cadastrado com sucesso!');
       setComentarios('');
@@ -62,6 +64,7 @@ export default function Concluido() {
 
  return (
    <Background>
+    <ScrollView>
     <Container>
       
       <MapView
@@ -126,6 +129,7 @@ export default function Concluido() {
     <ButtonConfirmar onPress={() => cadastrar().then(navigation.navigate('Home'))}>
           <TextButton>Confirmar</TextButton>
     </ButtonConfirmar>
+    </ScrollView>
    </Background>
  );
 }

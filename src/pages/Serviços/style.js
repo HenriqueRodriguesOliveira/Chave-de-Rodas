@@ -113,14 +113,16 @@ color: white;
 `;
 
 export const ContainerData = styled.View`
-margin-top: 60px;
+margin-top: 20px;
+flex-direction: row;
 `;
 
 export const TituloData = styled.Text`
 font-size: 18px;
 font-weight: bold;
-color: #121212;
-margin-top: 5px;
+color: #3E6D9C;
+margin: 5px;
+left: 10px;
 `;
 
 export const ContainerValor = styled.View`
@@ -128,6 +130,7 @@ flex-direction: row;
 background-color: #FFF;
 align-items: center;
 margin: 10px;
+margin-top: 15px;
 padding: 10px;
 border: 1px #e8e8e8;
 border-radius: 10px;
@@ -136,9 +139,13 @@ border-radius: 10px;
 export const ButtonData = styled.TouchableOpacity`
 height: 45px;
 width: 150px;
-background-color: #3E6D9C;
+background-color: transparent;
 border-radius: 7px;
-position: absolute;
-left: 250px;
-top: 140px;
+border: 1px #3E6D9C;
+left: 78px;
+`;
+
+export const Servicot = styled.Text`
+font-size: 1px;
+color: white;
 `;

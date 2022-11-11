@@ -55,7 +55,7 @@ export default function Home(){
     <Background>
 
       <ContainerHeader>
-        <MenuButton>
+        <MenuButton onPress={() => navigation.toggleDrawer()} >
         <Menu source={require('../../assets/images/menu.png')} />
         </MenuButton>
         <MenuButton onPress={() => navigation.navigate('Perfil')}>
@@ -69,15 +69,15 @@ export default function Home(){
       <Titulo>Quais serviços você precisa?</Titulo>
       <Container>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        <Card onPress={ () => navigation.navigate('Serviços & Agendamento')} style={estilo.sombra}>
+        <Card onPress={ () => navigation.navigate('Serviços de Carros')} style={estilo.sombra}>
           <ImageCard source={require('../../assets/images/carro.jpg')}  />
         </Card>
 
-        <Card onPress={ () => navigation.navigate('ServiçosM')} style={estilo.sombra}>
+        <Card onPress={ () => navigation.navigate('Serviços de Motos')} style={estilo.sombra}>
         <ImageCard source={require('../../assets/images/moto.png')} />
         </Card>
 
-        <Card onPress={ () => navigation.navigate('ServiçosB')} style={estilo.sombra}>
+        <Card onPress={ () => navigation.navigate('Serviços de Bicicletas')} style={estilo.sombra}>
         <ImageCard source={require('../../assets/images/bicicleta.png')} />
         </Card>
         </ScrollView>

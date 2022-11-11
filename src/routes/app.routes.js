@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import Home from '../pages/Home';
 import Perfil from '../pages/Perfil';
@@ -8,65 +8,48 @@ import Serviços from '../pages/Serviços';
 import ServiçosM from '../pages/Serviços/servicosM';
 import ServiçosB from '../pages/Serviços/servicosB';
 
-import Agendamento from '../pages/Agendamento';
-import AgendamentoM from '../pages/Agendamento/agendamentoM';
-import AgendamentoB from '../pages/Agendamento/agendamentoB';
+import Agendado from '../pages/Agendado';
 
 import Concluido from '../pages/Concluido';
 
-const AppStack =  createStackNavigator();
+const Drawer =  createDrawerNavigator();
 
 function AppRoutes(){
     return(
-        <AppStack.Navigator initialRouteName='Concluido'>
-            <AppStack.Screen 
+        <Drawer.Navigator initialRouteName='Home' screenOptions={{
+          drawerStyle:{
+            backgroundColor: '#fff',
+            width: 240,
+          },
+            drawerActiveBackgroundColor: '#3E6D9C',
+            drawerActiveTintColor:'#FFF',
+            drawerPosition: 'left'
+          }}>
+
+
+            <Drawer.Screen 
             name="Home" 
             component={Home}
-            options={{headerShown: false}} 
+            options={{headerShown:false}}
             />
 
-            <AppStack.Screen name="Serviços & Agendamento" component={Serviços} />
+            <Drawer.Screen name="Serviços de Carros" component={Serviços} screenOptions={{headerShown:true}}/>
 
-            <AppStack.Screen name="ServiçosM" component={ServiçosM} options={{
-                headerStyle:{
-                    borderBottomColor: '#007D45',
-                    borderBottomWidth: 1
-                },
-            }}/>
-            <AppStack.Screen name="ServiçosB" component={ServiçosB} options={{
-                headerStyle:{
-                    borderBottomColor: '#007D45',
-                    borderBottomWidth: 1
-                },
-            }}/>
+            <Drawer.Screen name="Serviços de Motos" component={ServiçosM}/>
 
+            <Drawer.Screen name="Serviços de Bicicletas" component={ServiçosB}/>
 
-            <AppStack.Screen name="Agendamento" component={Agendamento} 
-            options={{
-                headerStyle:{
-                    borderBottomColor: '#007D45',
-                    borderBottomWidth: 1
-                },
-            }}/>
-            <AppStack.Screen name="AgendamentoM" component={AgendamentoM}
-            options={{
-                headerStyle:{
-                    borderBottomColor: '#007D45',
-                    borderBottomWidth: 1
-                },
-            }}/>
-            <AppStack.Screen name="AgendamentoB" component={AgendamentoB}
-            options={{
-                headerStyle:{
-                    borderBottomColor: '#007D45',
-                    borderBottomWidth: 1
-                },
+            <Drawer.Screen name="Serviços Agendados" component={Agendado}/>
+
+            <Drawer.Screen name="Perfil" component={Perfil} options={{headerTitleStyle:{
+              textAlign: 'center'
+            }}}/>
+
+            <Drawer.Screen name="Concluido" component={Concluido} options={{
+              headerShown: false, drawerLabel: () => null, headerLeft: null,
             }}/>
 
-            <AppStack.Screen name="Concluido" component={Concluido} options={{headerShown: false}}/>
-
-            <AppStack.Screen name="Perfil" component={Perfil} />
-        </AppStack.Navigator>
+        </Drawer.Navigator>
     );
 }
 
