@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import { StyleSheet } from 'react-native';
-import { Background,  Botao, ImgPerfil, Titulo, Dados, Div } from './style';
+import { Background,  Botao, ImgPerfil, Titulo, Dados, Div, TextBotao } from './style';
 import { AuthContext } from '../../contexts/auth';
 
 export default function Perfil() {
@@ -17,7 +17,7 @@ export default function Perfil() {
     <Div/>
 
     <Titulo>Idade</Titulo>
-    <Dados>22 anos</Dados>
+    <Dados>{user.idade} anos</Dados>
 
     <Div/>
 
@@ -27,10 +27,10 @@ export default function Perfil() {
     <Div/>
 
     <Titulo>Telefone</Titulo>
-    <Dados>(85) 9 9999-9999</Dados>
+    <Dados>{user.number}</Dados>
 
     <Botao onPress={ () => signOut() } style={estilo.sombra}>
-    <Dados style={{color: '#FFF'}}>Sair da conta</Dados>
+    <TextBotao style={{color: '#FFF'}}>Sair da conta</TextBotao>
     </Botao>
 
     </Background>
@@ -41,4 +41,4 @@ const estilo = StyleSheet.create({
     sombra:{
         elevation: 5
     }
-})
+});

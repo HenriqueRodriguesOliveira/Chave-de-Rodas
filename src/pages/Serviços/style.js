@@ -88,7 +88,6 @@ padding-right: 50px;
 export const Servico = styled.Text`
 font-size: 18px;
 color: black;
-padding-right: 50px;
 `;
 
 export const Valor = styled.Text`
@@ -99,11 +98,12 @@ color: #000
 
 export const ButtonConfirmar = styled.TouchableOpacity`
 height: 45px;
-width: 150px;
+width: 90%;
 background-color: #3E6D9C;
 border-radius: 7px;
-position: absolute;
-left: 240px;
+margin-left: auto;
+margin-right: auto;
+margin-top: 20px;
 `;
 export const TextButton = styled.Text`
 font-size: 14px;
@@ -115,34 +115,33 @@ color: white;
 export const ContainerData = styled.View`
 margin-top: 20px;
 flex-direction: row;
+justify-content: space-around;
 `;
 
 export const TituloData = styled.Text`
 font-size: 18px;
 font-weight: bold;
 color: #3E6D9C;
-margin: 5px;
 left: 10px;
 `;
 
 export const ContainerValor = styled.View`
 flex-direction: row;
 background-color: #FFF;
-align-items: center;
 margin: 10px;
 margin-top: 15px;
 padding: 10px;
 border: 1px #e8e8e8;
 border-radius: 10px;
+justify-content: flex-end;
 `;
 
 export const ButtonData = styled.TouchableOpacity`
 height: 45px;
-width: 150px;
+width: 180px;
 background-color: transparent;
 border-radius: 7px;
 border: 1px #3E6D9C;
-left: 78px;
 `;
 
 export const Servicot = styled.Text`

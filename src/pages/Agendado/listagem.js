@@ -4,10 +4,9 @@ import { View, Text, StyleSheet } from 'react-native';
 export default function Lista({data}) {
  return (
    <View style={style.container}>
-    <Text style={style.textos}>Serviços: {data.serviços}</Text>
+    <Text style={style.textos}>📅 {data.agenda}</Text>
+    <Text style={style.textos}>Serviços: {data.servicos}</Text>
     <Text style={style.textos}>Valor: R$ {data.total},00</Text>
-    
-    
    </View>
   );
 }

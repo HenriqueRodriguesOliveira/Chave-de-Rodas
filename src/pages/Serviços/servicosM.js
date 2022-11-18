@@ -34,17 +34,19 @@ import {
 export default function ServiçosM() {
 
   const navigation = useNavigation();
-  const[agendamento, setAgendamento] = useState('');
 
 
   const [isSelected, setSelection] = useState(false);
   const [isSelected2, setSelection2] = useState(false);
   const [isSelected3, setSelection3] = useState(false);
   
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+  const [text, setText] = useState('Escolha a data e o horário');
 
   valorTotal = 0
-  testando = ''
+  servicoTotal = ''
 
   function calcularTotal() {
     if(isSelected){
@@ -58,154 +60,150 @@ export default function ServiçosM() {
     if(isSelected3){
       valorTotal += 100
     }
-
     return valorTotal;
- }
-
- function ServicosCalcular() {
-  if(isSelected){
-    testando += 'Diagnóstico da suspensão, '
   }
 
-  if(isSelected2){
-    testando += 'Diagnóstico do motor, '
+  function ServicoSelecionado() {
+    if(isSelected){
+      servicoTotal += 'Diagnóstico da suspensão, '
+    }
+
+    if(isSelected2){
+      servicoTotal += 'Diagnóstico do motor, '
+    }
+
+    if(isSelected3){
+      servicoTotal += 'Revisão na injeção eletrónica'
+    }
+    return servicoTotal;
   }
 
-  if(isSelected3){
-    testando += 'Revisão na injeção eletrónica'
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+
+    let tempDate = new Date(currentDate);
+    let fDate = tempDate.getDate() + '/' + (tempDate.getMonth() +1) + '/' + tempDate.getFullYear();
+    let fTime = 'Horas: ' + tempDate.getHours() + ' | Minutos: ' + tempDate.getMinutes();
+    setText(fDate + '   ' +  fTime)
   }
 
-  return testando;
-}
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  }
 
-
- async function cadastrar(){
-  let servicos = await firebase.database().ref('usuario/servicos');
-  let chave = servicos.push().key;
-
-  servicos.child(chave).set({
-    serviços: testando,
-    total: valorTotal,
-  })
- }
-
- async function handleAdd(date){
-  if(agendamento !== ''){
-    let servicos = await firebase.database().ref('usuario/agendamentoMoto');
-    let chave = servicos.push().key;
-    await firebase.database().ref('usuario/agendamentoMoto').child(chave).set({
-      agenda: date.toString(),
-    })
-  setAgendamento('');
-}}
-
-  const handleConfirm = (date) => {
-  alert("Agendado com sucesso");
-  handleAdd(date)
-  hideDatePicker();
-  };
-
-  const hideDatePicker = () => {
-  setDatePickerVisibility(false);
-  };
-
-  const showDatePicker = () => {
-  setDatePickerVisibility(true);
-  };
+  //Cadastrar Serviço
+  async function cadastrar(){
+    let uid = await firebase.auth().currentUser.uid
+    let key = await firebase.database().ref('Agendamento/Motos/Serviços').child(uid).push().key
+    await firebase.database().ref('Agendamento/Motos/Serviços').child(uid).child(key).set({
+      servicos: servicoTotal,
+      total: valorTotal,
+      agenda: text,
+    });
+  }
 
  return (
 
-   <Background>
+  <Background>
     <ScrollView>
+
     <ContainerTemplate>
-    <Template  source={require('../../assets/images/moto.png')}/>
+      <Template  source={require('../../assets/images/moto.png')}/>
     </ContainerTemplate>
     
     <Titulo>Lista de Serviços</Titulo>
 
     <Container>
-      <ContainerCheck>
 
-       <ContainerIcon>
-         <Icon source={require('../../assets/images/suspensao.png')} />
-       </ContainerIcon>
+      <ContainerCheck>
+        <ContainerIcon>
+          <Icon source={require('../../assets/images/suspensao.png')} />
+        </ContainerIcon>
        
-       <ContainerText>
-       <Suspensao>Diagnóstico da suspensão</Suspensao>
-       <Valor>Valor: R$60,00</Valor>
-       </ContainerText>
+        <ContainerText>
+          <Suspensao>Diagnóstico da suspensão</Suspensao>
+          <Valor>Valor: R$60,00</Valor>
+        </ContainerText>
 
         <CheckBox
-        style={{right: 15, bottom: 5}}
-        value={isSelected}
-        onValueChange={setSelection}
+          style={{right: 15, bottom: 5}}
+          value={isSelected}
+          onValueChange={setSelection}
         />
       </ContainerCheck>
+
 
       <ContainerCheck>
+        <ContainerIcon>
+          <Icon source={require('../../assets/images/motor.png')} />
+        </ContainerIcon>
 
-       <ContainerIcon>
-         <Icon source={require('../../assets/images/motor.png')} />
-       </ContainerIcon>
-       <ContainerText>
-       <Motor>Diagnóstico do Motor</Motor>
-       <Valor>Valor: R$50,00</Valor>
-       </ContainerText>
+        <ContainerText>
+          <Motor>Diagnóstico do Motor</Motor>
+          <Valor>Valor: R$50,00</Valor>
+        </ContainerText>
+
         <CheckBox
-        style={{right: 15, bottom: 5}}
-        value={isSelected2}
-        onValueChange={setSelection2}
+          style={{right: 15, bottom: 5}}
+          value={isSelected2}
+          onValueChange={setSelection2}
         />
       </ContainerCheck>
+
 
       <ContainerCheck>
-       <ContainerIcon>
-         <Icon source={require('../../assets/images/injecao-eletronica.png')} />
-       </ContainerIcon>
-       <ContainerText>
-       <Injecao>Revisão na injeção eletrônica</Injecao>
-       <Valor>Valor: R$150,00</Valor>
-       </ContainerText>
+        <ContainerIcon>
+          <Icon source={require('../../assets/images/injecao-eletronica.png')} />
+        </ContainerIcon>
+
+        <ContainerText>
+          <Injecao>Revisão na injeção eletrônica</Injecao>
+          <Valor>Valor: R$150,00</Valor>
+        </ContainerText>
+
         <CheckBox
-        style={{right: 15, bottom: 5}}
-        value={isSelected3}
-        onValueChange={setSelection3}
+          style={{right: 15, bottom: 5}}
+          value={isSelected3}
+          onValueChange={setSelection3}
         />
       </ContainerCheck>
+
+      <ContainerValor>
+        <Servico>Valor total: ${calcularTotal()}</Servico>
+        <Servicot>Valor total: ${ServicoSelecionado()}</Servicot>
+      </ContainerValor>
 
       <ContainerData>
-
-      <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        is24Hour
-        mode="datetime"
-        onConfirm={handleConfirm}
-        onCancel={hideDatePicker}
-      />
-      
-      <TituloData>Agendar Serviço 🗓</TituloData>
-
-      <ButtonData onPress={showDatePicker}>
-        <TextButton style={{color:'#121212'}}>Selecionar Data</TextButton>
-      </ButtonData>
+        {show && (<DateTimePicker
+        testID="dateTimePicker"
+        value={date}
+        mode={mode}
+        is24Hour={false}
+        display='default'
+        onChange={onChange}
+        />)}
+        <ButtonData onPress={() => showMode('date')}>
+          <TextButton style={{color:'#121212'}}>Selecionar Data</TextButton>
+        </ButtonData>
+        <ButtonData onPress={() => showMode('time')}>
+          <TextButton style={{color:'#121212'}}>Selecionar Horário</TextButton>
+        </ButtonData>
       </ContainerData>
-      
+
       <ContainerValor>
-      <Servico>Valor total: ${calcularTotal()}</Servico>
-      <Servicot>Valor total: ${ServicosCalcular()}</Servicot>
+        <TituloData style={{marginLeft:'auto', marginRight:'auto'}}>{text}</TituloData>
+      </ContainerValor>
 
       <ButtonConfirmar onPress={() => {
         cadastrar().then(navigation.navigate('Concluido'))
-        alert('Confirmado')
         }}>
-        <TextButton>Confirmar</TextButton>
-        
-      </ButtonConfirmar>
-      </ContainerValor>
-
+          <TextButton>Confirmar</TextButton>
+        </ButtonConfirmar>
     </Container>
     </ScrollView>
-
    </Background>
   );
 }

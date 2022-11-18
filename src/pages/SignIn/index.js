@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Platform } from 'react-native';
+import { Platform, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../contexts/auth';
 import firebase from '../../services/firebaseConnection';
@@ -37,6 +37,7 @@ export default function SignIn(){
 
   return(
     <Background>
+      <ScrollView>
       <Container
       behavior={Platform.OS === 'ios' ? 'padding' : ''}>
 
@@ -92,6 +93,8 @@ export default function SignIn(){
 
         
       </Container>
+
+      </ScrollView>
     </Background>
   );
 }

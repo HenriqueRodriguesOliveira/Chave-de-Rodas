@@ -33,6 +33,8 @@ function AuthProvider({ children }){
                 let data = {
                   uid: uid,
                   nome: snapshot.val().nome,
+                  number: snapshot.val().number,
+                  idade: snapshot.val().idade,
                   email: value.user.email,
                 };
 
@@ -46,19 +48,22 @@ function AuthProvider({ children }){
     }
     
     //Cadastrar usuario
-    async function signUp(email, password, nome){
+    async function signUp(email, password, nome, idade, number){
         await firebase.auth().createUserWithEmailAndPassword(email,password)
         .then(async (value)=>{
-            let uid = value.user.uid;
-            await firebase.database().ref('usuario').child(uid).set({
-                saldo: 0,
-                nome: nome
+            let uid = value.user.uid
+            await firebase.database().ref('users').child(uid).set({
+                nome: nome,
+                idade: idade,
+                number: number
             })
             .then(()=>{
                 let data = {
                     uid: uid,
                     nome: nome,
                     email: value.user.email,
+                    number: number,
+                    idade: idade
                 };
                 setUser(data);
                 storageUser(data);

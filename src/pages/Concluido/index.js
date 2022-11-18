@@ -24,7 +24,7 @@ export default function Concluido() {
     latitude: -3.7331,
     longitude: -38.5827,
   });
-  const[comentarios, setComentarios] = useState('');
+  const[comentario, setComentario] = useState('');
 
   useEffect(() => {
     getMyLocation()
@@ -48,18 +48,14 @@ export default function Concluido() {
   })
   }
 
-  async function cadastrar(){
-    if(comentarios !== ''){
-      let usuario =  await firebase.database().ref('usuario/comentarios');
-      let chave = usuario.push().key;
-
-      usuario.child(chave).set({
-        feedback: comentarios,
+  async function handleAdd(){
+      let comentarios = await firebase.database().ref('Comentarios');
+      let chave = comentarios.push().key;
+      comentarios.child(chave).set({
+        feedback: comentario,
         date: format(new Date(), 'dd/MM/yyyy')
       });
-      alert('Cadastrado com sucesso!');
-      setComentarios('');
-    }
+      alert('Cadastrado com sucesso!'); 
  }
 
  return (
@@ -121,12 +117,12 @@ export default function Concluido() {
           <Input 
           autoCorrect={false}
           autoCapitalize="none"
-          value={cadastrar}
-          onChangeText={(text) => setComentarios(text)}
+          value={comentario}
+          onChangeText={(text) => setComentario(text)}
           />
     </AreaInput>
 
-    <ButtonConfirmar onPress={() => cadastrar().then(navigation.navigate('Home'))}>
+    <ButtonConfirmar onPress={() => handleAdd().then(navigation.navigate('Home'))}>
           <TextButton>Confirmar</TextButton>
     </ButtonConfirmar>
     </ScrollView>
@@ -137,8 +133,10 @@ export default function Concluido() {
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
+    width: 100
+   
   },
   map: {
     ...StyleSheet.absoluteFillObject,

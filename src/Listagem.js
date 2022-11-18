@@ -2,9 +2,13 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 export default function Listagem({data}) {
+  console.log(data)
  return (
    <View style={style.container}>
-    <Text style={style.textos}>Comentario: {data.feedback}</Text>
+    <Text style={style.comentario}>Comentário:            {data.date}</Text>
+    <View style={{backgroundColor: '#f1f1f1', height: 1, width: 250}}/>
+    <Text style={style.textos}>{data.feedback}</Text>
+    
    </View>
   );
 }
@@ -12,17 +16,20 @@ export default function Listagem({data}) {
 const style = StyleSheet.create({
   container:{
     flex:1,
-    padding: 15,
-    marginBottom: 8,
-    marginEnd: 15,
-    marginStart: 15,
-    backgroundColor: '#f1f1f1',
+    padding: 25,
+    margin: 18,
+    backgroundColor: '#FFF',
     borderRadius: 5,
-    elevation: 1
+    elevation: 4,
   },
   textos:{
     color: '#404258',
     fontSize: 18,
-    margin: 8,
+    top: 5
+  },
+  comentario:{
+    color: '#404258',
+    fontSize: 18,
+    bottom:8,
   }
 })

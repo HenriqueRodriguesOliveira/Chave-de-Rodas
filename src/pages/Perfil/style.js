@@ -28,6 +28,12 @@ font-weight: 300;
 color: #000;
 `;
 
+export const TextBotao = styled.Text`
+font-size: 17px;
+font-weight: 300;
+color: #000;
+`;
+
 export const Div = styled.View`
 background-color: #f1f1f1;
 padding: 0.5px;

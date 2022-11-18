@@ -31,6 +31,8 @@ export const AreaInput = styled.View`
 flex-direction: column;
 width: 90%;
 margin-top: 20px;
+margin: 10px;
+
 `;
 
 export const Input = styled.TextInput`
@@ -51,11 +53,12 @@ left: 10px;
 
 export const ButtonConfirmar = styled.TouchableOpacity`
 height: 45px;
-width: 150px;
+width: 90%;
 background-color: #293462;
 border-radius: 7px;
 left: 10px;
 top: 10px;
+margin: 10px;
 `;
 
 export const TextButton = styled.Text`

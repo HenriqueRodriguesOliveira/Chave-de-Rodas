@@ -3,7 +3,7 @@ import firebase from '../../services/firebaseConnection';
 import CheckBox from '@react-native-community/checkbox';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 
 import { 
@@ -34,14 +34,16 @@ import {
 export default function ServiçosB() {
 
   const navigation = useNavigation();
-  const[agendamento, setAgendamento] = useState('');
 
 
   const [isSelected, setSelection] = useState(false);
   const [isSelected2, setSelection2] = useState(false);
   const [isSelected3, setSelection3] = useState(false);
   
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+  const [text, setText] = useState('Escolha a data e o horário');
 
   valorTotal = 0
   testando = ''
@@ -60,58 +62,49 @@ export default function ServiçosB() {
     }
 
     return valorTotal;
- }
-
- function ServicosCalcular() {
-  if(isSelected){
-    testando += 'Revisão completa, '
   }
 
-  if(isSelected2){
-    testando += 'Troca da corrente, '
+  function ServicosCalcular() {
+    if(isSelected){
+      testando += 'Revisão completa, '
+    }
+
+    if(isSelected2){
+      testando += 'Troca da corrente, '
+    }
+
+    if(isSelected3){
+      testando += 'Troca do aro'
+    }
+
+    return testando;
   }
 
-  if(isSelected3){
-    testando += 'Troca do aro'
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+
+    let tempDate = new Date(currentDate);
+    let fDate = tempDate.getDate() + '/' + (tempDate.getMonth() +1) + '/' + tempDate.getFullYear();
+    let fTime = 'Horas: ' + tempDate.getHours() + ' | Minutos: ' + tempDate.getMinutes();
+    setText(fDate + '   ' +  fTime)
   }
 
-  return testando;
-}
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  }
 
-
- async function cadastrar(){
-  let servicos = await firebase.database().ref('usuario/servicos');
-  let chave = servicos.push().key;
-
-  servicos.child(chave).set({
-    serviços: testando,
-    total: valorTotal,
-  })
- }
-
- async function handleAdd(date){
-  if(agendamento !== ''){
-    let servicos = await firebase.database().ref('usuario/agendamentoBicicleta');
-    let chave = servicos.push().key;
-    await firebase.database().ref('usuario/agendamentoBicicleta').child(chave).set({
-      agenda: date.toString(),
-    })
-  setAgendamento('');
-}}
-
-  const handleConfirm = (date) => {
-  alert("Agendado com sucesso");
-  handleAdd(date)
-  hideDatePicker();
-  };
-
-  const hideDatePicker = () => {
-  setDatePickerVisibility(false);
-  };
-
-  const showDatePicker = () => {
-  setDatePickerVisibility(true);
-  };
+  async function cadastrar(){
+    let uid = await firebase.auth().currentUser.uid
+    let key = await firebase.database().ref('Agendamento/Bicicletas/Serviços').child(uid).push().key
+    await firebase.database().ref('Agendamento/Bicicletas/Serviços').child(uid).child(key).set({
+      servicos: testando,
+      total: valorTotal,
+      agenda: text,
+    });
+  }
 
  return (
 
@@ -173,35 +166,37 @@ export default function ServiçosB() {
         />
       </ContainerCheck>
 
-      <ContainerData>
-
-      <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        is24Hour
-        mode="datetime"
-        onConfirm={handleConfirm}
-        onCancel={hideDatePicker}
-      />
-      
-      <TituloData>Agendar Serviço 🗓</TituloData>
-
-      <ButtonData onPress={showDatePicker}>
-        <TextButton style={{color:'#121212'}}>Selecionar Data</TextButton>
-      </ButtonData>
-      </ContainerData>
-      
       <ContainerValor>
       <Servico>Valor total: ${calcularTotal()}</Servico>
       <Servicot>Valor total: ${ServicosCalcular()}</Servicot>
+      </ContainerValor>
+
+      <ContainerData>
+        {show && (<DateTimePicker
+        testID="dateTimePicker"
+        value={date}
+        mode={mode}
+        is24Hour={false}
+        display='default'
+        onChange={onChange}
+        />)}
+        <ButtonData onPress={() => showMode('date')}>
+          <TextButton style={{color:'#121212'}}>Selecionar Data</TextButton>
+        </ButtonData>
+        <ButtonData onPress={() => showMode('time')}>
+          <TextButton style={{color:'#121212'}}>Selecionar Horário</TextButton>
+        </ButtonData>
+      </ContainerData>
+      
+      <ContainerValor>
+        <TituloData style={{marginLeft:'auto', marginRight:'auto'}}>{text}</TituloData>
+      </ContainerValor>
 
       <ButtonConfirmar onPress={() => {
         cadastrar().then(navigation.navigate('Concluido'))
-        alert('Confirmado')
         }}>
         <TextButton>Confirmar</TextButton>
-        
       </ButtonConfirmar>
-      </ContainerValor>
 
     </Container>
     </ScrollView>

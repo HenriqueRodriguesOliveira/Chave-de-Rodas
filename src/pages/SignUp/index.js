@@ -17,11 +17,13 @@ export default function SignUp(){
   const[nome, setNome] = useState('');
   const[email, setEmail] = useState('');
   const[password, setPassword] = useState('');
+  const[idade, setIdade] = useState('');
+  const[number, setNumber] = useState('');
 
   const { signUp } = useContext(AuthContext);
   
   function handleSignUp(){
-    signUp(email, password, nome);
+    signUp(email, password, nome, idade, number);
   }
 
   return(
@@ -37,7 +39,27 @@ export default function SignUp(){
           autoCorrect={false}
           autoCapitalize="none"
           value={nome}
-          onChangeText={ (text) => setNome(text)}
+          onChange={ (text) => setNome(text)}
+          />
+        </AreaInput>
+
+        <AreaInput>
+          <Input 
+          placeholder="Idade"
+          autoCorrect={false}
+          autoCapitalize="none"
+          value={idade}
+          onChange={ (text) => setIdade(text)}
+          />
+        </AreaInput>
+
+        <AreaInput>
+          <Input 
+          placeholder="Número do Celular"
+          autoCorrect={false}
+          autoCapitalize="none"
+          value={number}
+          onChange={ (text) => setNumber(text)}
           />
         </AreaInput>
         
@@ -47,7 +69,7 @@ export default function SignUp(){
           autoCorrect={false}
           autoCapitalize="none"
           value={email}
-          onChangeText={ (text) => setEmail(text)}
+          onChange={(text) => setEmail(text)}
           />
         </AreaInput>
 
@@ -58,7 +80,7 @@ export default function SignUp(){
           autoCapitalize="none"
           value={password}
           secureTextEntry={true}
-          onChangeText={ (text) => setPassword(text)}
+          onChange={ (text) => setPassword(text)}
           />
         </AreaInput>
 

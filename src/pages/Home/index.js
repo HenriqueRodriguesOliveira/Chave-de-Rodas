@@ -1,162 +1,61 @@
-import React, { useContext, useEffect, useState } from 'react';
-import {Button, FlatList, ScrollView, StyleSheet} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, ScrollView } from 'react-native';
 import  firebase  from '../../services/firebaseConnection';
-import { AuthContext } from '../../contexts/auth';
 import Listagem from '../../Listagem';
+import Header from '../../components/Header';
+import Cards from '../../components/Cards';
+import CardSv from '../../components/CardServices';
+import Footer from '../../components/Foolter';
 
-import {
-  Background,
-  ContainerHeader,
-  MenuButton,
-  Menu,
-  Icon,
-  TextoBem,
-  Nome,
-  Titulo, 
-  Container, 
-  Card, 
-  ImageCard,
-  ContainerMarcas, 
-  ImgMarca,
-  ContainerComentarios,
-  Comentarios,
-  Div,
-  Foolter,
-} from './style';
-
+import { Background, Titulo, Div } from './style';
 
 export default function Home(){
-  const { user, signOut } = useContext(AuthContext);
   const [lista, setLista] = useState([]);
-  
-  const uid = user && user.nome;
-
-  const navigation = useNavigation();
 
   useEffect(()=> {
     async function dados(){
-      await firebase.database().ref('usuario/comentarios').limitToLast(3).once('value', (snapshot)=>{
-        setLista([]);
+      await firebase.database().ref('Comentarios').limitToLast(3).on('value', (snapshot)=>{
+      setLista([]);
 
-        snapshot.forEach((childItem) =>  {
-          let data = {
-            key: childItem.key,
-            feedback: childItem.val().feedback,
-          };
-          setLista(oldArray => [...oldArray, data]);
+      snapshot.forEach((childItem) =>  {
+        let data = {
+          key: childItem.key,
+          feedback: childItem.val().feedback,
+          date: childItem.val().date,
+        };
+        setLista(oldArray => [...oldArray, data]);
         })
       })
     }
     dados();
-    },[]);
+  },[]);
+
     
   return(
     <Background>
+      <ScrollView>
+      
+      <Header/>
+      
+      <CardSv/>
 
-      <ContainerHeader>
-        <MenuButton onPress={() => navigation.toggleDrawer()} >
-        <Menu source={require('../../assets/images/menu.png')} />
-        </MenuButton>
-        <MenuButton onPress={() => navigation.navigate('Perfil')}>
-        <Icon source={require('../../assets/images/user-fake.jpeg')} />
-        </MenuButton>
-      </ContainerHeader>
-
-      <TextoBem>Bem vindo!</TextoBem>
-      <Nome>{user.nome}</Nome>
-
-      <Titulo>Quais serviços você precisa?</Titulo>
-      <Container>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        <Card onPress={ () => navigation.navigate('Serviços de Carros')} style={estilo.sombra}>
-          <ImageCard source={require('../../assets/images/carro.jpg')}  />
-        </Card>
-
-        <Card onPress={ () => navigation.navigate('Serviços de Motos')} style={estilo.sombra}>
-        <ImageCard source={require('../../assets/images/moto.png')} />
-        </Card>
-
-        <Card onPress={ () => navigation.navigate('Serviços de Bicicletas')} style={estilo.sombra}>
-        <ImageCard source={require('../../assets/images/bicicleta.png')} />
-        </Card>
-        </ScrollView>
-      </Container>
-
-      <Titulo>Marcas nas quais trabalhamos</Titulo>
-      <Container>
-        <ContainerMarcas style={estilo.sombra}>
-          <ImgMarca source={require('../../assets/images/fiat.png')}/>
-        </ContainerMarcas>
-        <ContainerMarcas style={estilo.sombra}>
-          <ImgMarca source={require('../../assets/images/gm.png')}/>
-        </ContainerMarcas>
-        <ContainerMarcas style={estilo.sombra}>
-          <ImgMarca source={require('../../assets/images/toyota.png')}/>
-        </ContainerMarcas>
-        <ContainerMarcas style={estilo.sombra}>
-          <ImgMarca source={require('../../assets/images/peugeot.png')}/>
-        </ContainerMarcas>
-      </Container>
+      <Cards/>
 
       <Titulo>Nossa Avaliação</Titulo>
 
       <FlatList 
+          showsHorizontalScrollIndicator={false}
+          horizontal={true}
           keyExtractor={item => item.key}
           data={lista}
-          renderItem={({item}) => ( <Listagem data={item} />)}/>
+          renderItem={({item}) => (<Listagem data={item} />)}
+      />
 
-      
       <Div/>
 
-      <Titulo>Nossa Localização</Titulo>
-      <Foolter>
-      <Comentarios>Rua Francisco Uchoa - 755 - P.Andrade</Comentarios>
-      <Comentarios>Tel: (85) 3235-5761</Comentarios>
-      </Foolter>
+      <Footer/>
 
+      </ScrollView>
     </Background>
   );
 }
-
-const estilo = StyleSheet.create({
-  sombra:{
-    elevation: 3
-  },
-})
-
-
-/*
-<FlatList 
-      keyExtractor={item => item.key}
-      data={lista}
-      renderItem={({item}) => ( <Listagem data={item} />)} />
-
-      <Button
-      title='Sair da conta'
-      onPress={ () => signOut() }
-      />
-
-
-
-    
-      <Titulo>Parceiros</Titulo>
-      <Container>
-        <ContainerMarcas>
-          <Marcas source={require('../../assets/images/volvo.png')} />
-        </ContainerMarcas>
-
-        <ContainerMarcas>
-        <Marcas source={require('../../assets/images/fiat.png')} />
-        </ContainerMarcas>
-
-        <ContainerMarcas>
-        <Marcas source={require('../../assets/images/gm.png')} />
-        </ContainerMarcas>
-
-        <ContainerMarcas>
-        <Marcas source={require('../../assets/images/mercedes.png')} />
-        </ContainerMarcas>
-      </Container>
-
-*/
